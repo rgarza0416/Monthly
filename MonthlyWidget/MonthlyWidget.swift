@@ -8,16 +8,17 @@
 import WidgetKit
 import SwiftUI
 
-struct Provider: AppIntentTimelineProvider {
+struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> DayEntry {
-        DayEntry(date: Date(), configuration: ConfigurationAppIntent())
+        DayEntry(date: Date())
     }
 
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> DayEntry {
-        DayEntry(date: Date(), configuration: configuration)
+    func getSnapshot(in context: Context, completion: @escaping (DayEntry) -> ()) {
+        let entry = DayEntry(date: Date())
+        completion(entry)
     }
-    
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<DayEntry> {
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [DayEntry] = []
 
         // Generate a timeline consisting of seven entries a day apart, starting from the current date.
@@ -25,87 +26,108 @@ struct Provider: AppIntentTimelineProvider {
         for dayOffset in 0 ..< 7 {
             let entryDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: currentDate)!
             let startOfDate = Calendar.current.startOfDay(for: entryDate)
-            let entry = DayEntry(date: startOfDate, configuration: configuration)
+            let entry = DayEntry(date: startOfDate)
             entries.append(entry)
         }
 
-        return Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: entries, policy: .atEnd)
+        completion(timeline)
     }
 }
 
 struct DayEntry: TimelineEntry {
     let date: Date
-    let configuration: ConfigurationAppIntent
 }
 
 struct MonthlyWidgetEntryView : View {
+    @Environment(\.showsWidgetContainerBackground) var showsBackground
+    @Environment(\.widgetRenderingMode) var renderingMode
     var entry: DayEntry
+    var config: MonthConfig
+
+    init(entry: DayEntry) {
+        self.entry = entry
+        self.config = MonthConfig.determineConfig(from: entry.date)
+    }
 
     var body: some View {
-        ZStack {
-            ContainerRelativeShape()
-                .fill(.gray.gradient)
-            
-            VStack {
-                HStack(spacing: 4) {
-                    Text("⛄️")
-                        .font(.title)
-                    Text(entry.date.weekdayDisplayFormat)
-                        .font(.title3)
-                        .fontWeight(.bold)
-                        .minimumScaleFactor(0.6)
-                        .foregroundStyle(.black.opacity(0.6))
-                    Spacer()
-                }
-                
-                Text(entry.date.dayDisplayFormat)
-                    .font(.system(size: 80, weight: .heavy))
-                    .foregroundStyle(.white.opacity(0.8))
+        VStack {
+            HStack(spacing: 4) {
+                Text(config.emojiText)
+                    .font(.title)
+                Text(entry.date.weekdayDisplayFormat)
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .minimumScaleFactor(0.6)
+                    .foregroundStyle(showsBackground ? config.weekdayTextColor : .white)
+                Spacer()
             }
+            .id(entry.date)
+            .transition(.push(from: .trailing))
+            .animation(.bouncy, value: entry.date)
+
+            Text(entry.date.dayDisplayFormat)
+                .font(.system(size: 80, weight: .heavy))
+                .foregroundStyle(showsBackground ? config.dayTextColor : .white)
+                .contentTransition(.numericText())
+        }
+        .containerBackground(for: .widget) {
+            ContainerRelativeShape()
+                .fill(config.backgroundColor.gradient)
         }
     }
 }
 
+@main
 struct MonthlyWidget: Widget {
     let kind: String = "MonthlyWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
             MonthlyWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
-            
         }
+        .configurationDisplayName("Monthly Style Widget")
+        .description("The theme of the widget changes based on month.")
         .supportedFamilies([.systemSmall])
-    }
-}
-
-extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
-    }
-    
-    fileprivate static var starEyes: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "🤩"
-        return intent
+        .disfavoredLocations([.standBy], for: [.systemSmall])
     }
 }
 
 #Preview(as: .systemSmall) {
     MonthlyWidget()
 } timeline: {
-    DayEntry(date: .now, configuration: .smiley)
-    DayEntry(date: .now, configuration: .starEyes)
+    MockData.dayOne
+    MockData.dayTwo
+    MockData.dayThree
+    MockData.dayFour
 }
+
 
 extension Date {
     var weekdayDisplayFormat: String {
         self.formatted(.dateTime.weekday(.wide))
     }
-    
+
     var dayDisplayFormat: String {
         self.formatted(.dateTime.day())
     }
 }
+
+struct MockData {
+    static let dayOne = DayEntry(date: dateToDisplay(month: 2, day: 4))
+    static let dayTwo = DayEntry(date: dateToDisplay(month: 11, day: 5))
+    static let dayThree = DayEntry(date: dateToDisplay(month: 11, day: 6))
+    static let dayFour = DayEntry(date: dateToDisplay(month: 11, day: 7))
+
+
+    static func dateToDisplay(month: Int, day: Int) -> Date {
+        let components = DateComponents(calendar: Calendar.current,
+                                        year: 2022,
+                                        month: month,
+                                        day: day)
+
+        return Calendar.current.date(from: components)!
+    }
+}
+
+

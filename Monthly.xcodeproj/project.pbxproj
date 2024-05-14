@@ -13,12 +13,11 @@
 		FAFC0BB32BF3D73500F21E69 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAFC0BB22BF3D73500F21E69 /* Preview Assets.xcassets */; };
 		FAFC0BC02BF3D9A800F21E69 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC0BBF2BF3D9A800F21E69 /* WidgetKit.framework */; };
 		FAFC0BC22BF3D9A800F21E69 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFC0BC12BF3D9A800F21E69 /* SwiftUI.framework */; };
-		FAFC0BC52BF3D9A800F21E69 /* MonthlyWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC0BC42BF3D9A800F21E69 /* MonthlyWidgetBundle.swift */; };
-		FAFC0BC72BF3D9A800F21E69 /* MonthlyWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC0BC62BF3D9A800F21E69 /* MonthlyWidgetLiveActivity.swift */; };
 		FAFC0BC92BF3D9A800F21E69 /* MonthlyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC0BC82BF3D9A800F21E69 /* MonthlyWidget.swift */; };
-		FAFC0BCB2BF3D9A800F21E69 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC0BCA2BF3D9A800F21E69 /* AppIntent.swift */; };
 		FAFC0BCD2BF3D9A900F21E69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAFC0BCC2BF3D9A900F21E69 /* Assets.xcassets */; };
 		FAFC0BD12BF3D9A900F21E69 /* MonthlyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FAFC0BBD2BF3D9A800F21E69 /* MonthlyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FAFC0BD72BF3F6FA00F21E69 /* MonthConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC0BD62BF3F6FA00F21E69 /* MonthConfig.swift */; };
+		FAFC0BD92BF3F7C500F21E69 /* Colors+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFC0BD82BF3F7C500F21E69 /* Colors+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,12 +53,11 @@
 		FAFC0BBD2BF3D9A800F21E69 /* MonthlyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MonthlyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAFC0BBF2BF3D9A800F21E69 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		FAFC0BC12BF3D9A800F21E69 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		FAFC0BC42BF3D9A800F21E69 /* MonthlyWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyWidgetBundle.swift; sourceTree = "<group>"; };
-		FAFC0BC62BF3D9A800F21E69 /* MonthlyWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyWidgetLiveActivity.swift; sourceTree = "<group>"; };
 		FAFC0BC82BF3D9A800F21E69 /* MonthlyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyWidget.swift; sourceTree = "<group>"; };
-		FAFC0BCA2BF3D9A800F21E69 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		FAFC0BCC2BF3D9A900F21E69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAFC0BCE2BF3D9A900F21E69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FAFC0BD62BF3F6FA00F21E69 /* MonthConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthConfig.swift; sourceTree = "<group>"; };
+		FAFC0BD82BF3F7C500F21E69 /* Colors+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Colors+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,10 +130,9 @@
 		FAFC0BC32BF3D9A800F21E69 /* MonthlyWidget */ = {
 			isa = PBXGroup;
 			children = (
-				FAFC0BC42BF3D9A800F21E69 /* MonthlyWidgetBundle.swift */,
-				FAFC0BC62BF3D9A800F21E69 /* MonthlyWidgetLiveActivity.swift */,
 				FAFC0BC82BF3D9A800F21E69 /* MonthlyWidget.swift */,
-				FAFC0BCA2BF3D9A800F21E69 /* AppIntent.swift */,
+				FAFC0BD62BF3F6FA00F21E69 /* MonthConfig.swift */,
+				FAFC0BD82BF3F7C500F21E69 /* Colors+Ext.swift */,
 				FAFC0BCC2BF3D9A900F21E69 /* Assets.xcassets */,
 				FAFC0BCE2BF3D9A900F21E69 /* Info.plist */,
 			);
@@ -252,10 +249,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFC0BD72BF3F6FA00F21E69 /* MonthConfig.swift in Sources */,
 				FAFC0BC92BF3D9A800F21E69 /* MonthlyWidget.swift in Sources */,
-				FAFC0BCB2BF3D9A800F21E69 /* AppIntent.swift in Sources */,
-				FAFC0BC72BF3D9A800F21E69 /* MonthlyWidgetLiveActivity.swift in Sources */,
-				FAFC0BC52BF3D9A800F21E69 /* MonthlyWidgetBundle.swift in Sources */,
+				FAFC0BD92BF3F7C500F21E69 /* Colors+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
